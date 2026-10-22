@@ -75,4 +75,4 @@ Se o cliente tiver o arquivo original do logo, substitua pelos oficiais.
 - [ ] Aula experimental: existe ou não
 - [ ] Fotos originais em alta resolução (as atuais vieram de print)
 - [ ] Tags de pré-visualização (Open Graph) quando o domínio final estiver definido
-- [ ] Testar todos os botões de WhatsApp no celular
+- [ ] Testar todos os botões de WhatsApp no celular.  
