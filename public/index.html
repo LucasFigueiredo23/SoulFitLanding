@@ -405,14 +405,17 @@ p { margin: 0; }
 @media (max-width: 960px) {
   .hero-grade {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-areas: "pre" "h1" "sub" "lado" "studio" "academia";
+    /* Empilhado: cada frase fica junto do quadrado da sua unidade */
+    grid-template-areas: "pre" "l1" "sub" "studio" "l2" "lado" "academia";
   }
+  .hero-h1 { display: contents; }
+  .hero-l1 { grid-area: l1; }
+  .hero-l2 { grid-area: l2; margin-top: 48px; }
+  .hero-l1, .hero-l2 { font-size: clamp(2.25rem, 8vw, 4.5rem); }
   .hero-h1 { grid-template-columns: minmax(0, 1fr); }
   .hero-l1 { padding-right: 0; }
   .hero-l2 { padding-left: 0; border-left: 0; }
-  .hero-lado { border-left: 0; padding: 0 0 28px; }
-  .hero-sub { padding-right: 0; padding-top: 18px; padding-bottom: 10px; }
-  .u-academia { margin-top: var(--vao); }
+  .hero-lado, .hero-sub { border-left: 0; padding: 16px 0 24px; }
   .hero-l2, .hero-lado { margin-left: 0; }
   .hero-h1 { column-gap: 0; }
   .unidade { aspect-ratio: auto; min-height: 600px; }
@@ -443,6 +446,41 @@ p { margin: 0; }
   .escala { --col-nome: 0px; }
   .escala .regua { margin-left: 0; }
   .ficha div { grid-template-columns: 1fr; gap: 2px; }
+
+  /* ---- Início no celular: título em dois blocos, direto para os cartões ---- */
+  .hero-pre { padding-top: 22px; padding-bottom: 14px; }
+  .hero-pre .rotulo:first-child { display: none; }
+  .hero-l1, .hero-l2 { font-size: clamp(2.1rem, 11.4vw, 3rem); line-height: .95; }
+  .hero-sub, .hero-lado { display: none; }
+  .hero-grade { padding-bottom: 8px; }
+
+  /* Ordem no celular: frase do Studio, quadrado do Studio, frase da Academia, quadrado da Academia.
+     O h1 "some" da grade (display: contents) e cada frase vira um item próprio. */
+  .hero-grade { grid-template-areas: "pre" "l1" "studio" "l2" "academia"; }
+  .hero-h1 { display: contents; }
+  .hero-l1 { grid-area: l1; margin-bottom: 18px; }
+  .hero-l2 { grid-area: l2; border-top: 0; padding-left: 0; margin: 40px 0 18px; }
+  .u-academia { margin-top: 0; }
+
+  /* Cartões mais compactos, mesma altura nos dois */
+  .unidade { min-height: 500px; padding: 22px; gap: 24px; }
+  .unidade .logo-u { width: 112px; }
+  .unidade .indice { display: none; }
+  .unidade .corpo-u { gap: 12px; }
+  .unidade h2 { font-size: 1.4rem; }
+  .unidade p { font-size: 1rem; line-height: 1.5; }
+  .unidade .acoes { gap: 4px; margin-top: 4px; }
+  .unidade .acoes .btn-contorno {
+    width: 100%; min-height: 44px; border: 0; background: none;
+    text-decoration: underline; text-underline-offset: 4px; color: var(--gelo);
+  }
+  .unidade .acoes .btn-contorno:hover { background: none; color: var(--cor); }
+  .unidade::after {
+    background: linear-gradient(180deg, rgba(17,18,20,.95) 0%, rgba(17,18,20,.82) 28%, rgba(17,18,20,.38) 46%, rgba(17,18,20,.8) 64%, rgba(17,18,20,.96) 100%);
+  }
+  /* Foto do Studio ampliada a partir de baixo: o letreiro sai do quadro, fica a recepção iluminada */
+  .u-studio .foto img { object-position: 50% 100%; transform-origin: 50% 100%; transform: scale(1.4); }
+  .u-studio:hover .foto img { transform: scale(1.45); }
 }
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
