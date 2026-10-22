@@ -49,6 +49,7 @@ Para usar um domínio próprio: painel do Cloudflare → Workers & Pages → sou
 | Cores e fontes | bloco `:root` no início do `<style>` |
 | Fotos do hero | `<div class="foto">` dentro de `.u-studio` e `.u-academia` |
 | Enquadramento da foto do Studio | `.u-studio .foto img { object-position }` |
+| Prévia do link (WhatsApp etc.) | tags `og:` no `<head>` do `public/index.html`; imagem em `public/assets/og-soulfit.jpg` (1200×630) |
 | Logos | `<symbol>` no começo do `<body>`; cores via `color`, `--logo-linha` e `--logo-sub` |
 | Pendências (endereço da Academia, dias, aula experimental) | procure por `class="pendente"` |
 
