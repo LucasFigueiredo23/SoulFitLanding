@@ -1,0 +1,12 @@
+{
+  "$schema": "./node_modules/wrangler/config-schema.json",
+  // Nome do projeto no Cloudflare (vira soulfit.<sua-conta>.workers.dev)
+  "name": "soulfit",
+  "compatibility_date": "2026-10-22",
+  // Site 100% estático: sem Worker, o Cloudflare serve só a pasta public/
+  "assets": {
+    "directory": "./public",
+    // Endereço que não existe mostra o public/404.html
+    "not_found_handling": "404-page"
+  }
+}

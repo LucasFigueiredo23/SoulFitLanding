@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Página não encontrada · Soul Fit</title>
+<meta name="robots" content="noindex">
+<link rel="icon" type="image/svg+xml" href="/assets/logo-academia.svg">
+<style>
+  :root { color-scheme: dark; --asfalto: #111214; --gelo: #F4F5F6; --cinza: #8E939E; --soul: #8EDB00; }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; min-height: 100vh; display: grid; place-items: center;
+    background: var(--asfalto); color: var(--gelo);
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    padding: 24px max(16px, env(safe-area-inset-left, 0px));
+  }
+  main { display: grid; gap: 24px; max-width: 32rem; }
+  img { width: 140px; height: auto; }
+  .codigo { font-family: ui-monospace, Menlo, monospace; font-size: .8rem; letter-spacing: .12em; color: var(--cinza); }
+  h1 { margin: 0; font-size: clamp(2rem, 7vw, 3.25rem); line-height: 1; text-transform: uppercase; }
+  p { margin: 0; color: var(--cinza); font-size: 1.1rem; line-height: 1.5; }
+  a {
+    justify-self: start; display: inline-flex; align-items: center; min-height: 52px; padding: 0 26px;
+    background: var(--soul); color: var(--asfalto); font-weight: 700; text-decoration: none;
+  }
+  a:hover { background: var(--gelo); }
+  a:focus-visible { outline: 2px solid var(--soul); outline-offset: 3px; }
+</style>
+</head>
+<body>
+<main>
+  <img src="/assets/logo-academia.svg" alt="Soul Fit Academia" width="1630" height="1310">
+  <span class="codigo">ERRO 404</span>
+  <h1>Essa página não existe.</h1>
+  <p>O endereço pode ter mudado. Volte para o início e escolha entre o Studio e a Academia.</p>
+  <a href="/">Voltar para o início</a>
+</main>
+</body>
+</html>

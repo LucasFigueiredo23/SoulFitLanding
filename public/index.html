@@ -1,0 +1,852 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Soul Fit Castanhal</title>
+<meta name="description" content="Soul Fit em Castanhal: Studio com um personal só para você o treino todo e Academia com personais orientando no salão. Escolha sua unidade e fale com a equipe no WhatsApp.">
+<link rel="icon" type="image/svg+xml" href="assets/logo-academia.svg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,100..900&family=JetBrains+Mono:wght@500&display=swap">
+<style>
+/* Layout: ficha técnica de treino — grid exposto, linhas de 1 px, hero com dois quadrados iguais (Studio e Academia) */
+:root {
+  color-scheme: dark;
+  --asfalto: #111214;   /* fundo principal */
+  --grafite: #1C1D21;   /* superfícies */
+  --concreto: #3A3D45;  /* divisórias decorativas (1,7:1, nunca texto) */
+  --aco: #6B707A;       /* bordas que precisam ser vistas (3,8:1) */
+  --gelo: #F4F5F6;      /* texto principal e identidade do Studio */
+  --cinza: #8E939E;     /* texto secundário (6,1:1) */
+  --soul: #8EDB00;      /* verde do logo, identidade da Academia (11:1) */
+
+  --f-display: "Archivo", "Arial Black", Arial, sans-serif;
+  --f-texto: "Archivo", "Helvetica Neue", Arial, sans-serif;
+  --f-mono: "JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --t-mega: clamp(2.6rem, 10.5vw, 9.5rem);
+  --t-h1: clamp(2.25rem, 5.1vw, 4.5rem);
+  --t-h2: clamp(1.9rem, 4vw, 3.4rem);
+  --t-h3: clamp(1.35rem, 2.2vw, 1.75rem);
+  --t-corpo: 1.0625rem;
+  --t-mono: 0.75rem;
+
+  --gutter: clamp(16px, 4vw, 56px);
+  --secao: clamp(72px, 10vw, 144px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--asfalto);
+  color: var(--gelo);
+  font-family: var(--f-texto);
+  font-size: var(--t-corpo);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::before {
+  content: ""; position: fixed; inset: 0 0 auto;
+  height: env(safe-area-inset-top, 0px); z-index: 60;
+  background: var(--asfalto);
+}
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+h1, h2, h3 { margin: 0; text-wrap: balance; }
+p { margin: 0; }
+
+.wrap {
+  width: 100%;
+  max-width: 1360px;
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+.rotulo {
+  font-family: var(--f-mono);
+  font-size: var(--t-mono);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--cinza);
+}
+.display {
+  font-family: var(--f-display);
+  font-weight: 800;
+  font-stretch: 118%;
+  text-transform: uppercase;
+  line-height: 0.92;
+  letter-spacing: -0.01em;
+}
+.pendente {
+  border: 1px dashed currentColor;
+  padding: 0 6px;
+  border-radius: 3px;
+  opacity: 0.75;
+  font-family: var(--f-mono);
+  font-size: 0.8em;
+  white-space: nowrap;
+}
+
+.pular {
+  position: absolute; left: 16px; top: -60px; z-index: 100;
+  background: var(--soul); color: var(--asfalto);
+  padding: 10px 16px; font-weight: 700; text-decoration: none;
+}
+.pular:focus { top: calc(env(safe-area-inset-top, 0px) + 12px); }
+
+:focus-visible { outline: 2px solid var(--soul); outline-offset: 3px; }
+.claro :focus-visible { outline-color: var(--asfalto); }
+
+/* ---------- Botões ---------- */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 12px;
+  min-height: 52px; padding: 0 26px;
+  font-family: var(--f-texto); font-weight: 700; font-size: 1rem;
+  text-decoration: none; border: 1.5px solid transparent;
+  transition: background-color .2s ease, color .2s ease, border-color .2s ease, transform .2s ease;
+}
+.btn span[aria-hidden] { transition: transform .2s ease; }
+.btn:hover span[aria-hidden] { transform: translateX(4px); }
+.btn-soul { background: var(--soul); color: var(--asfalto); }
+.btn-soul:hover { background: var(--gelo); }
+.btn-preto { background: var(--asfalto); color: var(--gelo); }
+.btn-preto:hover { background: var(--grafite); }
+.btn-gelo { background: var(--gelo); color: var(--asfalto); }
+.btn-gelo:hover { background: var(--soul); }
+.btn-contorno { border-color: var(--aco); color: var(--gelo); }
+.btn-contorno:hover { border-color: var(--soul); color: var(--soul); }
+.claro .btn-contorno { border-color: var(--asfalto); color: var(--asfalto); }
+.claro .btn-contorno:hover { background: var(--asfalto); color: var(--gelo); }
+.nota-cta { margin-top: 12px; }
+
+/* ---------- Header ---------- */
+.topo {
+  position: sticky; top: env(safe-area-inset-top, 0px); z-index: 50;
+  background: color-mix(in srgb, var(--asfalto) 92%, transparent);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--concreto);
+}
+.topo .wrap { display: flex; align-items: center; justify-content: space-between; gap: 24px; min-height: 72px; }
+.logo { display: block; color: var(--soul); --logo-linha: var(--soul); --logo-sub: var(--soul); }
+.logo-studio { color: var(--gelo); --logo-linha: var(--soul); --logo-sub: #C9CCD1; }
+.marca .logo { height: 44px; width: auto; aspect-ratio: 1630 / 1310; }
+.nav { display: flex; align-items: center; gap: 28px; }
+.nav a:not(.btn) {
+  text-decoration: none; font-weight: 600; font-size: 0.95rem; color: var(--gelo);
+  padding-block: 6px; border-bottom: 1.5px solid transparent;
+}
+.nav a:not(.btn):hover { border-bottom-color: var(--soul); }
+
+.wa-menu { position: relative; }
+.wa-menu summary {
+  list-style: none; cursor: pointer;
+  min-height: 44px; padding: 0 18px;
+  display: inline-flex; align-items: center;
+  border: 1.5px solid var(--soul); color: var(--soul);
+  font-weight: 700; font-size: 0.95rem;
+}
+.wa-menu summary::-webkit-details-marker { display: none; }
+.wa-menu[open] summary, .wa-menu summary:hover { background: var(--soul); color: var(--asfalto); }
+.wa-menu .painel {
+  position: absolute; right: 0; top: calc(100% + 8px); width: 260px;
+  background: var(--grafite); border: 1px solid var(--aco);
+  display: grid;
+}
+.wa-menu .painel a {
+  display: grid; gap: 2px; padding: 14px 16px; text-decoration: none;
+  border-bottom: 1px solid var(--concreto);
+}
+.wa-menu .painel a:last-child { border-bottom: 0; }
+.wa-menu .painel a:hover { background: var(--asfalto); }
+.wa-menu .painel strong { font-size: 1rem; }
+
+.menu-movel { display: none; }
+.menu-movel summary {
+  list-style: none; cursor: pointer; min-height: 44px; padding: 0 16px;
+  display: inline-flex; align-items: center; gap: 10px;
+  border: 1.5px solid var(--aco); font-weight: 700;
+}
+.menu-movel summary::-webkit-details-marker { display: none; }
+.menu-movel .painel {
+  position: absolute; left: 0; right: 0; top: 100%;
+  background: var(--asfalto); border-bottom: 1px solid var(--concreto);
+  padding: 8px max(16px, env(safe-area-inset-right, 0px)) 20px max(16px, env(safe-area-inset-left, 0px));
+  display: grid;
+}
+.menu-movel .painel a { padding: 14px 0; border-bottom: 1px solid var(--concreto); text-decoration: none; font-weight: 600; font-size: 1.1rem; }
+.menu-movel .painel .rotulo { margin-top: 16px; padding-bottom: 6px; }
+
+/* ---------- Hero ---------- */
+.hero { border-bottom: 1px solid var(--concreto); }
+.hero-grade {
+  --vao: clamp(14px, 1.8vw, 28px);
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: var(--vao);
+  padding-bottom: var(--vao);
+  grid-template-areas:
+    "pre   pre"
+    "h1    h1"
+    "sub   lado"
+    "studio academia";
+}
+.hero-h1 { grid-area: h1; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: var(--vao); }
+.hero-l1, .hero-l2 { display: block; }
+.hero-pre { grid-area: pre; padding-top: clamp(28px, 5vw, 56px); padding-bottom: 20px; display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.hero-l1, .hero-l2 { font-size: var(--t-h1); }
+.hero-l1 { padding-right: 24px; }
+.hero-l2 { padding-left: 24px; border-left: 1px solid var(--concreto); margin-left: calc(var(--vao) / -2); color: var(--soul); }
+.hero-sub { grid-area: sub; padding: 24px 24px clamp(32px, 4vw, 48px) 0; max-width: 56ch; color: var(--cinza); font-size: 1.125rem; }
+.hero-sub strong, .hero-lado strong { color: var(--gelo); font-weight: 600; }
+.hero-lado strong { color: var(--soul); }
+.hero-lado { grid-area: lado; border-left: 1px solid var(--concreto); margin-left: calc(var(--vao) / -2); padding: 24px 0 clamp(32px, 4vw, 48px) calc(24px + var(--vao) / 2); max-width: calc(56ch + 24px); color: var(--cinza); font-size: 1.125rem; }
+
+/* Os dois painéis têm o mesmo tamanho (quadrados) e a mesma estrutura:
+   logo no topo, etiquetas, título, texto e botões na base.
+   Cada um tem a sua cor: Studio = branco gelo, Academia = verde Soul. */
+.unidade {
+  --cor: var(--gelo);
+  position: relative;
+  aspect-ratio: 1 / 1;
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px;
+  padding: clamp(24px, 3vw, 44px);
+  color: var(--gelo);
+  border: 1px solid color-mix(in srgb, var(--cor) 28%, transparent);
+  isolation: isolate;
+  transition: transform .35s cubic-bezier(.2,.7,.2,1), box-shadow .35s cubic-bezier(.2,.7,.2,1), border-color .35s ease;
+  animation: subir .7s cubic-bezier(.2,.7,.2,1) both;
+}
+.u-studio { grid-area: studio; }
+.u-academia { grid-area: academia; --cor: var(--soul); animation-delay: .12s; }
+@keyframes subir { from { transform: translateY(28px); } to { transform: none; } }
+
+/* faixa de cor no topo, que cresce no hover */
+.unidade::before {
+  content: ""; position: absolute; left: -1px; right: -1px; top: -1px; height: 5px; z-index: 2;
+  background: var(--cor); transform-origin: left; transform: scaleX(.18);
+  transition: transform .5s cubic-bezier(.2,.7,.2,1);
+}
+.unidade:hover, .unidade:focus-within {
+  transform: translateY(-6px);
+  border-color: var(--cor);
+  box-shadow: 10px 10px 0 color-mix(in srgb, var(--cor) 85%, transparent);
+}
+.unidade:hover::before, .unidade:focus-within::before { transform: scaleX(1); }
+
+.unidade .topo-u { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; position: relative; z-index: 1; }
+.unidade .logo-u { flex: none; width: clamp(132px, 13vw, 176px); height: auto; aspect-ratio: 1630 / 1310; }
+.unidade .indice {
+  font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: .14em; text-transform: uppercase;
+  color: var(--cor); writing-mode: vertical-rl; padding-top: 4px;
+}
+/* Mesma altura de bloco nos dois painéis: etiquetas e título alinhados, botões na mesma linha */
+.unidade .corpo-u { display: grid; grid-template-rows: auto auto 1fr auto; gap: 16px; min-height: 17.5rem; position: relative; z-index: 1; }
+.unidade h2 { font-size: var(--t-h3); font-weight: 800; font-stretch: 110%; line-height: 1.1; }
+.unidade p { max-width: 46ch; color: #D4D6DA; }
+.unidade .acoes { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin-top: 6px; }
+.tags { display: flex; flex-wrap: wrap; gap: 8px; list-style: none; margin: 0; padding: 0; }
+.tags li {
+  font-family: var(--f-mono); font-size: var(--t-mono); font-weight: 500; letter-spacing: .08em; text-transform: uppercase;
+  padding: 6px 10px; border: 1px solid color-mix(in srgb, var(--cor) 55%, transparent); color: var(--gelo);
+  background: rgba(17,18,20,.55);
+}
+.tags li:first-child { background: var(--cor); color: var(--asfalto); border-color: var(--cor); }
+
+/* Fundo de cada painel: foto real da unidade, com o mesmo véu escuro nos dois */
+.unidade .foto { position: absolute; inset: 0; z-index: -2; overflow: hidden; background: var(--grafite); }
+.unidade .foto img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 30%; transition: transform .8s cubic-bezier(.2,.7,.2,1), filter .6s ease; }
+.unidade:hover .foto img { transform: scale(1.05); }
+.unidade::after {
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: linear-gradient(180deg, rgba(17,18,20,.94) 0%, rgba(17,18,20,.86) 26%, rgba(17,18,20,.45) 42%, rgba(17,18,20,.55) 52%, rgba(17,18,20,.92) 70%, rgba(17,18,20,.97) 100%);
+}
+/* Studio: fachada à noite, enquadrada na recepção iluminada e na luz verde da porta */
+.u-studio .foto img { object-position: 50% 92%; filter: saturate(.65) contrast(1.08) brightness(.95); }
+.u-studio:hover .foto img { filter: saturate(.9) contrast(1.08) brightness(1.05); }
+
+/* "Letreiro aceso": no hover o logo brilha, como o letreiro da fachada à noite */
+.unidade .logo-u { transition: filter .5s ease; }
+.unidade:hover .logo-u, .unidade:focus-within .logo-u {
+  filter: drop-shadow(0 0 6px color-mix(in srgb, var(--cor) 55%, transparent)) drop-shadow(0 0 22px color-mix(in srgb, var(--soul) 35%, transparent));
+}
+.btn-gelo-hero { background: var(--gelo); color: var(--asfalto); }
+.btn-gelo-hero:hover { background: var(--soul); }
+
+/* ---------- Seções ---------- */
+.secao { padding-block: var(--secao); }
+.claro { background: var(--gelo); color: var(--asfalto); }
+.claro .rotulo { color: #4B4F57; }
+.cabeca { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; margin-bottom: clamp(40px, 6vw, 72px); }
+.cabeca .rotulo { grid-column: 1 / 4; padding-top: 10px; border-top: 1px solid currentColor; align-self: start; }
+.cabeca h2 { grid-column: 4 / 13; font-size: var(--t-h2); }
+
+.detalhe { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: start; }
+.detalhe > * { min-width: 0; }
+
+.lista-perfil { list-style: none; margin: 0; padding: 0; display: grid; }
+.lista-perfil li { display: grid; grid-template-columns: 56px 1fr; gap: 12px; padding-block: 18px; border-top: 1px solid var(--linha-lista, var(--concreto)); }
+.lista-perfil li:last-child { border-bottom: 1px solid var(--linha-lista, var(--concreto)); }
+.lista-perfil li .rotulo { padding-top: 4px; }
+.claro .lista-perfil { --linha-lista: #C9CCD1; }
+
+.ficha { display: grid; margin: 0; }
+.ficha div { display: grid; grid-template-columns: minmax(110px, 38%) 1fr; gap: 16px; padding-block: 12px; border-bottom: 1px solid var(--linha-lista, var(--concreto)); }
+.ficha dt { font-family: var(--f-mono); font-size: var(--t-mono); letter-spacing: .1em; text-transform: uppercase; color: var(--cinza); padding-top: 4px; }
+.claro .ficha dt { color: #4B4F57; }
+.ficha dd { margin: 0; font-weight: 600; }
+.claro .ficha { --linha-lista: #C9CCD1; }
+
+/* Studio em profundidade */
+#studio .texto { grid-column: 1 / 6; display: grid; gap: 28px; }
+#studio .texto .abre { font-size: 1.25rem; line-height: 1.5; }
+#studio .colunas { grid-column: 7 / 13; display: grid; gap: 40px; }
+
+/* Academia em profundidade */
+#academia .foto-fachada { grid-column: 1 / 6; }
+#academia .foto-fachada figure { margin: 0; }
+#academia .foto-fachada img { width: 100%; aspect-ratio: 3 / 4; object-fit: cover; }
+#academia .foto-fachada figcaption { margin-top: 10px; }
+#academia .colunas { grid-column: 7 / 13; display: grid; gap: 40px; }
+#academia .abre { font-size: 1.25rem; line-height: 1.5; }
+
+/* Pilates */
+.pilates { border-block: 1px solid var(--concreto); background: var(--grafite); }
+.pilates .wrap { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: center; padding-block: clamp(36px, 5vw, 56px); }
+.pilates .rotulo { grid-column: 1 / 4; color: var(--soul); }
+.pilates p { grid-column: 4 / 9; font-size: 1.15rem; }
+.pilates .btn { grid-column: 10 / 13; justify-self: end; }
+
+/* Horários */
+.escala { position: relative; display: grid; gap: 28px; }
+.escala .regua {
+  position: relative; height: 28px; border-bottom: 1px solid var(--aco);
+  margin-left: var(--col-nome);
+}
+.escala .regua span {
+  position: absolute; bottom: 6px; transform: translateX(-50%);
+  font-family: var(--f-mono); font-size: var(--t-mono); color: var(--cinza);
+  font-variant-numeric: tabular-nums;
+}
+.escala .regua span::after {
+  content: ""; position: absolute; left: 50%; top: calc(100% + 6px); width: 1px; height: 7px; background: var(--aco);
+}
+.escala .regua span:first-child { transform: none; }
+.escala .regua span:last-child { transform: translateX(-100%); }
+.escala .regua span:first-child::after { left: 0; }
+.escala .regua span:last-child::after { left: 100%; }
+.escala { --col-nome: clamp(110px, 18%, 220px); }
+.faixa { display: grid; grid-template-columns: var(--col-nome) 1fr; align-items: center; }
+.faixa .nome { font-weight: 700; font-size: 1.1rem; }
+.faixa .trilho { position: relative; height: 44px; background: repeating-linear-gradient(90deg, var(--concreto) 0 1px, transparent 1px calc(100% / 24)); background-color: var(--grafite); }
+.faixa .barra {
+  position: absolute; top: 0; bottom: 0;
+  left: calc(var(--abre) / 24 * 100%); width: calc((var(--fecha) - var(--abre)) / 24 * 100%);
+  display: flex; align-items: center; justify-content: space-between; padding: 0 12px;
+  font-family: var(--f-mono); font-size: 0.8rem; font-weight: 500; font-variant-numeric: tabular-nums;
+}
+.faixa.studio .barra { background: var(--gelo); color: var(--asfalto); }
+.faixa.academia .barra { background: var(--soul); color: var(--asfalto); }
+.horarios-nota { margin-top: 28px; color: var(--cinza); max-width: 60ch; }
+
+/* Como funciona */
+.passos { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border-top: 1px solid var(--concreto); }
+.passos li { padding: 28px 28px 8px 0; display: grid; gap: 14px; align-content: start; }
+.passos li + li { padding-left: 28px; border-left: 1px solid var(--concreto); }
+.passos .num { font-family: var(--f-display); font-weight: 800; font-stretch: 125%; font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1; color: var(--soul); }
+.passos h3 { font-size: 1.25rem; font-weight: 700; }
+.passos p { color: var(--cinza); }
+
+/* FAQ */
+.faq { display: grid; border-top: 1px solid #C9CCD1; }
+.faq details { border-bottom: 1px solid #C9CCD1; }
+.faq summary {
+  list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 24px; align-items: center;
+  padding-block: 22px; font-weight: 700; font-size: clamp(1.1rem, 2vw, 1.35rem);
+}
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary::after { content: "+"; font-family: var(--f-mono); font-size: 1.5rem; font-weight: 500; line-height: 1; flex: none; }
+.faq details[open] summary::after { content: "−"; }
+.faq .resp { padding: 0 0 26px; display: grid; gap: 14px; max-width: 68ch; }
+.faq .resp a { font-weight: 700; text-underline-offset: 4px; }
+.faq-grade { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; }
+.faq-grade .faq { grid-column: 4 / 13; }
+.faq-grade .lateral { grid-column: 1 / 4; }
+
+/* Contato */
+.fichas { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-top: 1px solid var(--concreto); }
+.ficha-unidade { padding: 32px 32px 8px 0; display: grid; gap: 22px; align-content: start; }
+.ficha-unidade + .ficha-unidade { padding-left: 32px; border-left: 1px solid var(--concreto); }
+.ficha-unidade h3 { font-size: var(--t-h3); font-weight: 800; font-stretch: 110%; }
+.numero { font-family: var(--f-mono); font-variant-numeric: tabular-nums; user-select: all; }
+.ficha-unidade .acoes { display: flex; flex-wrap: wrap; gap: 12px; }
+
+/* CTA final */
+.final { border-top: 1px solid var(--concreto); padding-block: var(--secao); overflow: hidden; }
+.final .mega { font-size: var(--t-mega); }
+.final .mega em { font-style: normal; color: var(--soul); }
+.final .linha { margin-top: clamp(32px, 5vw, 56px); display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 24px; align-items: end; border-top: 1px solid var(--concreto); padding-top: 28px; }
+.final .linha p { grid-column: 1 / 6; color: var(--cinza); font-size: 1.125rem; }
+.final .acoes { grid-column: 7 / 13; display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-end; }
+
+.rodape { border-top: 1px solid var(--concreto); padding-block: 36px; }
+.rodape .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 20px; }
+.rodape .logos { display: flex; align-items: center; gap: 28px; }
+.rodape .logos .logo { height: 48px; width: auto; aspect-ratio: 1630 / 1310; }
+.rodape a { text-underline-offset: 4px; }
+
+/* ---------- Responsivo ---------- */
+@media (max-width: 1000px) {
+  .nav a:not(.btn) { display: none; }
+}
+@media (max-width: 960px) {
+  .hero-grade {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-areas: "pre" "h1" "sub" "lado" "studio" "academia";
+  }
+  .hero-h1 { grid-template-columns: minmax(0, 1fr); }
+  .hero-l1 { padding-right: 0; }
+  .hero-l2 { padding-left: 0; border-left: 0; }
+  .hero-lado { border-left: 0; padding: 0 0 28px; }
+  .hero-sub { padding-right: 0; padding-top: 18px; padding-bottom: 10px; }
+  .u-academia { margin-top: var(--vao); }
+  .hero-l2, .hero-lado { margin-left: 0; }
+  .hero-h1 { column-gap: 0; }
+  .unidade { aspect-ratio: auto; min-height: 600px; }
+  .unidade:hover, .unidade:focus-within { box-shadow: 6px 6px 0 color-mix(in srgb, var(--cor) 85%, transparent); }
+  .unidade .corpo-u { min-height: 0; }
+  .cabeca .rotulo, .cabeca h2 { grid-column: 1 / -1; }
+  #studio .texto, #studio .colunas, #academia .foto-fachada, #academia .colunas { grid-column: 1 / -1; }
+  #academia .foto-fachada img { aspect-ratio: 4 / 3; }
+  .pilates .rotulo, .pilates p, .pilates .btn { grid-column: 1 / -1; justify-self: start; }
+  .passos { grid-template-columns: minmax(0, 1fr); }
+  .passos li, .passos li + li { padding: 24px 0; border-left: 0; }
+  .passos li + li { border-top: 1px solid var(--concreto); }
+  .faq-grade .faq, .faq-grade .lateral { grid-column: 1 / -1; }
+  .fichas { grid-template-columns: minmax(0, 1fr); }
+  .ficha-unidade, .ficha-unidade + .ficha-unidade { padding: 28px 0; border-left: 0; }
+  .ficha-unidade + .ficha-unidade { border-top: 1px solid var(--concreto); }
+  .final .linha p, .final .acoes { grid-column: 1 / -1; justify-content: flex-start; }
+}
+@media (max-width: 640px) {
+  .nav { display: none; }
+  .menu-movel { display: block; }
+  .topo .wrap { position: static; }
+  .topo { position: sticky; }
+  .marca .logo { height: 38px; }
+  .btn { width: 100%; }
+  .unidade .acoes .btn, .ficha-unidade .acoes .btn, .final .acoes .btn { width: 100%; }
+  .faixa { grid-template-columns: 1fr; gap: 8px; }
+  .escala { --col-nome: 0px; }
+  .escala .regua { margin-left: 0; }
+  .ficha div { grid-template-columns: 1fr; gap: 2px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition: none !important; animation: none !important; }
+}
+</style>
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<!-- Logos vetoriais (as cores vêm do CSS: color, --logo-linha, --logo-sub) -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><symbol id="logo-academia" viewBox="0 0 1630 1310"><title>Soul Fit Academia</title><path fill="currentColor" stroke="currentColor" stroke-width="26" stroke-linejoin="miter" d="M367.79 319.94Q367.79 378.62 321.9 410.82Q276.01 443.02 192.65 443.02Q37.68 443.02 13 335.29L68.67 324.15Q78.3 362.37 109.6 380.28Q140.89 398.18 194.76 398.18Q250.43 398.18 280.67 379.07Q310.91 359.96 310.91 322.95Q310.91 302.19 301.43 289.25Q291.96 276.31 274.8 267.88Q257.65 259.46 233.88 253.74Q210.1 248.02 181.22 241.4Q130.96 230.27 104.93 219.13Q78.9 208 63.86 194.31Q48.81 180.61 40.84 162.26Q32.86 143.9 32.86 120.13Q32.86 65.66 74.54 36.17Q116.22 6.68 193.85 6.68Q266.08 6.68 304.29 28.8Q342.51 50.92 357.86 104.18L301.28 114.11Q291.96 80.41 265.78 65.21Q239.59 50.01 193.25 50.01Q142.4 50.01 115.61 66.87Q88.83 83.72 88.83 117.12Q88.83 136.68 99.21 149.47Q109.6 162.26 129.16 171.13Q148.72 180.01 207.1 192.95Q226.66 197.47 246.06 202.13Q265.47 206.79 283.23 213.26Q300.98 219.73 316.48 228.46Q331.98 237.19 343.41 249.83Q354.85 262.46 361.32 279.62Q367.79 296.77 367.79 319.94Z M837.35 223.04Q837.35 289.55 811.93 339.5Q786.5 389.45 738.95 416.24Q691.41 443.02 626.71 443.02Q561.41 443.02 514.01 416.54Q466.62 390.06 441.64 339.95Q416.67 289.85 416.67 223.04Q416.67 121.33 472.34 64.01Q528.01 6.68 627.31 6.68Q692.01 6.68 739.56 32.41Q787.1 58.14 812.23 107.19Q837.35 156.24 837.35 223.04ZM778.67 223.04Q778.67 143.9 739.1 98.76Q699.53 53.62 627.31 53.62Q554.49 53.62 514.77 98.16Q475.04 142.7 475.04 223.04Q475.04 302.79 515.22 349.58Q555.39 396.38 626.71 396.38Q700.13 396.38 739.4 351.09Q778.67 305.8 778.67 223.04Z M1078.22 443.02Q1026.16 443.02 987.34 424.06Q948.52 405.1 927.16 368.99Q905.79 332.88 905.79 282.93V13H963.27V278.11Q963.27 336.19 992.76 366.28Q1022.25 396.38 1077.92 396.38Q1135.1 396.38 1166.84 365.23Q1198.59 334.08 1198.59 274.2V13H1255.77V277.51Q1255.77 328.97 1233.95 366.28Q1212.13 403.6 1172.26 423.31Q1132.39 443.02 1078.22 443.02Z M1345.27 437V13H1402.74V390.06H1617V437Z"/><path fill="currentColor" stroke="currentColor" stroke-width="26" stroke-linejoin="miter" d="M70.48 629.94V787.63H307V835.17H70.48V1007H13V583H314.22V629.94Z M786.26 1007V583H843.74V1007Z M1471.35 629.94V1007H1414.18V629.94H1268.53V583H1617V629.94Z"/><rect style="fill:var(--logo-linha, currentColor)" x="0" y="1095" width="1630" height="18"/><path style="fill:var(--logo-sub, currentColor)" d="M107.3 1310 92.45 1271.99H33.22L18.27 1310H0L53.05 1180H73.07L125.29 1310ZM62.83 1193.29 62 1195.87Q59.69 1203.53 55.17 1215.52L38.57 1258.24H87.19L70.49 1215.34Q67.91 1208.97 65.32 1200.94Z M290.71 1192.46Q269.12 1192.46 257.12 1206.34Q245.13 1220.23 245.13 1244.4Q245.13 1268.3 257.63 1282.83Q270.13 1297.36 291.44 1297.36Q318.75 1297.36 332.5 1270.33L346.9 1277.52Q338.87 1294.32 324.34 1303.08Q309.81 1311.85 290.61 1311.85Q270.96 1311.85 256.62 1303.68Q242.27 1295.51 234.75 1280.34Q227.23 1265.16 227.23 1244.4Q227.23 1213.31 244.02 1195.68Q260.81 1178.06 290.52 1178.06Q311.28 1178.06 325.21 1186.18Q339.15 1194.3 345.7 1210.26L329 1215.8Q324.48 1204.45 314.46 1198.45Q304.45 1192.46 290.71 1192.46Z M553.73 1310 538.88 1271.99H479.65L464.7 1310H446.43L499.48 1180H519.5L571.73 1310ZM509.26 1193.29 508.43 1195.87Q506.13 1203.53 501.6 1215.52L485 1258.24H533.62L516.92 1215.34Q514.34 1208.97 511.75 1200.94Z M791.48 1243.66Q791.48 1263.78 783.64 1278.86Q775.8 1293.95 761.4 1301.97Q747.01 1310 728.19 1310H679.57V1180H722.56Q755.59 1180 773.54 1196.56Q791.48 1213.12 791.48 1243.66ZM773.77 1243.66Q773.77 1219.49 760.53 1206.8Q747.29 1194.12 722.19 1194.12H697.19V1295.88H726.16Q740.46 1295.88 751.3 1289.61Q762.14 1283.34 767.95 1271.53Q773.77 1259.72 773.77 1243.66Z M907.99 1310V1180H1006.62V1194.39H925.62V1236.1H1001.09V1250.31H925.62V1295.61H1010.41V1310Z M1236.53 1310V1223.27Q1236.53 1208.88 1237.36 1195.59Q1232.84 1212.11 1229.24 1221.43L1195.66 1310H1183.29L1149.25 1221.43L1144.08 1205.74L1141.04 1195.59L1141.31 1205.83L1141.68 1223.27V1310H1126V1180H1149.15L1183.75 1270.14Q1185.6 1275.59 1187.31 1281.81Q1189.01 1288.04 1189.57 1290.81Q1190.3 1287.12 1192.66 1279.6Q1195.01 1272.08 1195.84 1270.14L1229.79 1180H1252.4V1310Z M1377.31 1310V1180H1394.93V1310Z M1612.01 1310 1597.15 1271.99H1537.92L1522.97 1310H1504.71L1557.76 1180H1577.78L1630 1310ZM1567.54 1193.29 1566.71 1195.87Q1564.4 1203.53 1559.88 1215.52L1543.27 1258.24H1591.89L1575.2 1215.34Q1572.61 1208.97 1570.03 1200.94Z"/></symbol><symbol id="logo-studio" viewBox="0 0 800 650"><title>Soul Fit Personal Studio</title><path fill="currentColor" stroke="currentColor" stroke-width="20" stroke-linejoin="miter" d="M177.35 154.78Q177.35 182.46 155.71 197.65Q134.06 212.84 94.74 212.84Q21.64 212.84 10 162.02L36.26 156.77Q40.8 174.8 55.56 183.24Q70.33 191.69 95.73 191.69Q121.99 191.69 136.26 182.68Q150.53 173.66 150.53 156.2Q150.53 146.41 146.05 140.31Q141.58 134.2 133.49 130.23Q125.4 126.25 114.19 123.56Q102.97 120.86 89.35 117.74Q65.64 112.48 53.36 107.23Q41.09 101.98 33.99 95.52Q26.89 89.06 23.13 80.4Q19.37 71.75 19.37 60.53Q19.37 34.84 39.03 20.93Q58.69 7.02 95.31 7.02Q129.38 7.02 147.4 17.45Q165.43 27.89 172.67 53.01L145.98 57.69Q141.58 41.8 129.23 34.63Q116.88 27.46 95.02 27.46Q71.04 27.46 58.4 35.41Q45.77 43.36 45.77 59.11Q45.77 68.34 50.67 74.37Q55.56 80.4 64.79 84.59Q74.02 88.78 101.55 94.88Q110.78 97.01 119.94 99.21Q129.09 101.41 137.47 104.46Q145.84 107.52 153.15 111.63Q160.46 115.75 165.86 121.71Q171.25 127.67 174.3 135.76Q177.35 143.85 177.35 154.78Z M406.65 109.08Q406.65 140.45 394.65 164.01Q382.66 187.57 360.23 200.21Q337.8 212.84 307.28 212.84Q276.48 212.84 254.13 200.35Q231.77 187.86 219.99 164.22Q208.21 140.59 208.21 109.08Q208.21 61.1 234.47 34.06Q260.73 7.02 307.57 7.02Q338.09 7.02 360.51 19.16Q382.94 31.29 394.79 54.43Q406.65 77.57 406.65 109.08ZM378.97 109.08Q378.97 71.75 360.3 50.45Q341.63 29.16 307.57 29.16Q273.22 29.16 254.48 50.17Q235.74 71.18 235.74 109.08Q235.74 146.69 254.69 168.77Q273.64 190.84 307.28 190.84Q341.92 190.84 360.44 169.47Q378.97 148.11 378.97 109.08Z M528.06 212.84Q503.5 212.84 485.19 203.9Q466.88 194.95 456.8 177.92Q446.73 160.89 446.73 137.32V10H473.84V135.05Q473.84 162.45 487.75 176.64Q501.66 190.84 527.92 190.84Q554.89 190.84 569.86 176.15Q584.84 161.45 584.84 133.21V10H611.81V134.77Q611.81 159.04 601.52 176.64Q591.23 194.24 572.42 203.54Q553.61 212.84 528.06 212.84Z M661.82 210V10H688.94V187.86H790V210Z"/><path fill="currentColor" d="M29.82 324.36V406.17H152.55V430.84H29.82V520H0V300H156.3V324.36Z M385.09 520V300H414.91V520Z M724.43 324.36V520H694.76V324.36H619.19V300H800V324.36Z"/><rect style="fill:var(--logo-linha, currentColor)" x="0" y="556" width="800" height="10"/><path style="fill:var(--logo-sub, currentColor)" d="M41.13 615.83Q41.13 620.65 38.93 624.45Q36.73 628.25 32.63 630.32Q28.53 632.4 22.89 632.4H10.47V650H0V600H22.46Q31.44 600 36.28 604.13Q41.13 608.27 41.13 615.83ZM30.59 616Q30.59 608.13 21.29 608.13H10.47V624.34H21.58Q25.9 624.34 28.25 622.2Q30.59 620.05 30.59 616Z M54.42 650V600H93.74V608.09H64.89V620.65H91.57V628.74H64.89V641.91H95.19V650Z M143.19 650 131.59 631.01H119.31V650H108.84V600H133.82Q142.76 600 147.62 603.85Q152.49 607.7 152.49 614.9Q152.49 620.16 149.51 623.97Q146.52 627.79 141.45 628.99L154.97 650ZM141.95 615.33Q141.95 608.13 132.72 608.13H119.31V622.89H133Q137.4 622.89 139.68 620.9Q141.95 618.91 141.95 615.33Z M208.04 635.59Q208.04 642.94 202.59 646.82Q197.15 650.71 186.61 650.71Q176.99 650.71 171.53 647.3Q166.06 643.9 164.5 636.98L174.61 635.31Q175.64 639.28 178.62 641.08Q181.6 642.87 186.89 642.87Q197.86 642.87 197.86 636.2Q197.86 634.07 196.6 632.68Q195.34 631.3 193.05 630.38Q190.76 629.45 184.27 628.14Q178.66 626.83 176.46 626.03Q174.26 625.23 172.48 624.15Q170.71 623.07 169.47 621.54Q168.23 620.01 167.53 617.96Q166.84 615.9 166.84 613.24Q166.84 606.46 171.93 602.86Q177.03 599.25 186.75 599.25Q196.05 599.25 200.71 602.16Q205.38 605.07 206.73 611.78L196.58 613.17Q195.8 609.94 193.4 608.3Q191.01 606.67 186.54 606.67Q177.03 606.67 177.03 612.63Q177.03 614.58 178.04 615.83Q179.05 617.07 181.04 617.94Q183.02 618.81 189.09 620.12Q196.3 621.65 199.4 622.94Q202.51 624.24 204.32 625.96Q206.12 627.68 207.08 630.07Q208.04 632.47 208.04 635.59Z M270.3 624.77Q270.3 632.58 267.22 638.5Q264.13 644.43 258.38 647.57Q252.63 650.71 244.97 650.71Q233.18 650.71 226.5 643.77Q219.81 636.83 219.81 624.77Q219.81 612.74 226.48 606Q233.15 599.25 245.04 599.25Q256.92 599.25 263.61 606.07Q270.3 612.88 270.3 624.77ZM259.62 624.77Q259.62 616.68 255.79 612.08Q251.96 607.49 245.04 607.49Q238.01 607.49 234.18 612.05Q230.35 616.61 230.35 624.77Q230.35 633 234.27 637.74Q238.19 642.48 244.97 642.48Q251.99 642.48 255.81 637.86Q259.62 633.25 259.62 624.77Z M314.61 650 292.82 611.5Q293.46 617.1 293.46 620.51V650H284.16V600H296.12L318.23 638.82Q317.59 633.46 317.59 629.06V600H326.89V650Z M377.93 650 373.5 637.22H354.44L350.01 650H339.54L357.78 600H370.13L388.3 650ZM363.95 607.7 363.74 608.48Q363.39 609.76 362.89 611.39Q362.39 613.02 356.78 629.35H371.16L366.22 614.98L364.7 610.15Z M401.02 650V600H411.49V641.91H438.32V650Z M544.41 635.59Q544.41 642.94 538.96 646.82Q533.51 650.71 522.97 650.71Q513.35 650.71 507.89 647.3Q502.42 643.9 500.86 636.98L510.98 635.31Q512.01 639.28 514.99 641.08Q517.97 642.87 523.26 642.87Q534.22 642.87 534.22 636.2Q534.22 634.07 532.96 632.68Q531.7 631.3 529.41 630.38Q527.12 629.45 520.63 628.14Q515.02 626.83 512.82 626.03Q510.62 625.23 508.85 624.15Q507.07 623.07 505.83 621.54Q504.59 620.01 503.9 617.96Q503.21 615.9 503.21 613.24Q503.21 606.46 508.3 602.86Q513.39 599.25 523.11 599.25Q532.41 599.25 537.08 602.16Q541.74 605.07 543.09 611.78L532.94 613.17Q532.16 609.94 529.77 608.3Q527.37 606.67 522.9 606.67Q513.39 606.67 513.39 612.63Q513.39 614.58 514.4 615.83Q515.41 617.07 517.4 617.94Q519.39 618.81 525.46 620.12Q532.66 621.65 535.76 622.94Q538.87 624.24 540.68 625.96Q542.49 627.68 543.45 630.07Q544.41 632.47 544.41 635.59Z M580.62 608.09V650H570.15V608.09H554.01V600H596.8V608.09Z M629.18 650.71Q618.86 650.71 613.37 645.67Q607.89 640.63 607.89 631.26V600H618.36V630.45Q618.36 636.37 621.18 639.44Q624 642.51 629.47 642.51Q635.07 642.51 638.09 639.3Q641.11 636.09 641.11 630.09V600H651.58V630.73Q651.58 640.24 645.7 645.48Q639.83 650.71 629.18 650.71Z M711.39 624.63Q711.39 632.36 708.35 638.13Q705.32 643.9 699.77 646.95Q694.21 650 687.05 650H666.82V600H684.92Q697.55 600 704.47 606.37Q711.39 612.74 711.39 624.63ZM700.85 624.63Q700.85 616.57 696.66 612.33Q692.47 608.09 684.7 608.09H677.29V641.91H686.16Q692.9 641.91 696.87 637.26Q700.85 632.61 700.85 624.63Z M725.25 650V600H735.72V650Z M800 624.77Q800 632.58 796.91 638.5Q793.83 644.43 788.08 647.57Q782.33 650.71 774.66 650.71Q762.88 650.71 756.19 643.77Q749.5 636.83 749.5 624.77Q749.5 612.74 756.17 606Q762.85 599.25 774.73 599.25Q786.62 599.25 793.31 606.07Q800 612.88 800 624.77ZM789.32 624.77Q789.32 616.68 785.49 612.08Q781.65 607.49 774.73 607.49Q767.71 607.49 763.88 612.05Q760.04 616.61 760.04 624.77Q760.04 633 763.96 637.74Q767.89 642.48 774.66 642.48Q781.69 642.48 785.5 637.86Q789.32 633.25 789.32 624.77Z"/></symbol></svg>
+
+<header class="topo">
+  <div class="wrap">
+    <a class="marca" href="#topo" aria-label="Soul Fit, início">
+      <svg class="logo" viewBox="0 0 1630 1310" aria-hidden="true"><use href="#logo-academia"/></svg>
+    </a>
+
+    <nav class="nav" aria-label="Principal">
+      <a href="#studio">Studio</a>
+      <a href="#academia">Academia</a>
+      <a href="#horarios">Horários</a>
+      <a href="#duvidas">Dúvidas</a>
+      <a href="#contato">Contato</a>
+      <details class="wa-menu">
+        <summary>Falar no WhatsApp</summary>
+        <div class="painel">
+          <a data-wa="header_studio" data-evento="cta_header_studio" href="https://wa.me/5591983542792">
+            <strong>Studio</strong><span class="rotulo">Personal só seu</span>
+          </a>
+          <a data-wa="header_academia" data-evento="cta_header_academia" href="https://wa.me/5591983542792">
+            <strong>Academia</strong><span class="rotulo">Personais no salão</span>
+          </a>
+        </div>
+      </details>
+    </nav>
+
+    <details class="menu-movel">
+      <summary>Menu</summary>
+      <div class="painel">
+        <a href="#studio">Studio</a>
+        <a href="#academia">Academia</a>
+        <a href="#horarios">Horários</a>
+        <a href="#duvidas">Dúvidas</a>
+        <a href="#contato">Contato</a>
+        <span class="rotulo">WhatsApp</span>
+        <a data-wa="header_studio" data-evento="cta_menu_studio" href="https://wa.me/5591983542792">Falar com o Studio</a>
+        <a data-wa="header_academia" data-evento="cta_menu_academia" href="https://wa.me/5591983542792">Falar com a Academia</a>
+      </div>
+    </details>
+  </div>
+</header>
+
+<main id="conteudo">
+
+  <!-- HERO -->
+  <section class="hero" id="topo" aria-labelledby="titulo-hero">
+    <div class="wrap">
+      <div class="hero-grade">
+        <div class="hero-pre">
+          <span class="rotulo">[ Duas experiências / uma só essência ]</span>
+          <span class="rotulo">Castanhal · Pará</span>
+        </div>
+        <h1 id="titulo-hero" class="display hero-h1">
+          <span class="hero-l1">Personal<br>só seu.</span>
+          <span class="hero-l2">Personais<br>no salão.</span>
+        </h1>
+        <p class="hero-sub">No <strong>Studio</strong>, um profissional acompanha só você, do aquecimento à última série.</p>
+        <p class="hero-lado">Na <strong>Academia</strong>, você treina no seu ritmo, com personais orientando em todo o salão.</p>
+
+        <article class="unidade u-studio" aria-labelledby="h-studio">
+          <div class="foto">
+            <img src="assets/studio-fachada-noite.jpg" alt="Fachada do Soul Fit Personal Studio à noite, com o letreiro aceso e a recepção iluminada" width="387" height="516">
+          </div>
+          <div class="topo-u">
+            <svg class="logo logo-studio logo-u" viewBox="0 0 800 650" role="img" aria-label="Soul Fit Personal Studio"><use href="#logo-studio"/></svg>
+            <span class="indice" aria-hidden="true">Personal Studio</span>
+          </div>
+          <div class="corpo-u">
+            <ul class="tags" aria-label="Destaques do Studio"><li>Personal só seu</li><li>06h às 21h</li></ul>
+            <h2 id="h-studio">Atenção total, do começo ao fim.</h2>
+            <p>O mesmo profissional fica ao seu lado o treino inteiro: planeja, acompanha cada série e ajusta a carga com você.</p>
+            <div class="acoes">
+              <a class="btn btn-gelo-hero" data-wa="studio_hero" data-evento="cta_hero_studio" href="https://wa.me/5591983542792">Conhecer o Studio <span aria-hidden="true">→</span></a>
+              <a class="btn btn-contorno" href="#studio">Ver detalhes</a>
+            </div>
+          </div>
+        </article>
+
+        <article class="unidade u-academia" aria-labelledby="h-academia">
+          <div class="foto">
+            <img src="assets/academia-move-your-soul.jpg" alt="Parede da Academia Soul Fit com a frase Move your soul, sobre aparelhos de musculação" width="335" height="597">
+          </div>
+          <div class="topo-u">
+            <svg class="logo logo-u" viewBox="0 0 1630 1310" role="img" aria-label="Soul Fit Academia"><use href="#logo-academia"/></svg>
+            <span class="indice" aria-hidden="true">Academia</span>
+          </div>
+          <div class="corpo-u">
+            <ul class="tags" aria-label="Destaques da Academia"><li>Personais no salão</li><li>06h às 22h</li></ul>
+            <h2 id="h-academia">Seu ritmo, com orientação por perto.</h2>
+            <p>Você escolhe o horário e monta a rotina do seu jeito. Os personais circulam pelo salão para orientar e corrigir.</p>
+            <div class="acoes">
+              <a class="btn btn-soul" data-wa="academia_hero" data-evento="cta_hero_academia" href="https://wa.me/5591983542792">Conhecer a Academia <span aria-hidden="true">→</span></a>
+              <a class="btn btn-contorno" href="#academia">Ver detalhes</a>
+            </div>
+          </div>
+        </article>
+      </div>
+      <p class="rotulo nota-cta" style="padding-block: 16px">Os botões abrem uma conversa no WhatsApp. Sem compromisso.</p>
+    </div>
+  </section>
+
+  <!-- STUDIO -->
+  <section class="secao claro" id="studio" aria-labelledby="h2-studio">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="rotulo">Studio Soul Fit</span>
+        <h2 id="h2-studio" class="display">Um personal só para você, o treino todo.</h2>
+      </div>
+      <div class="detalhe">
+        <div class="texto">
+          <p class="abre">No Studio, um profissional fica só com você durante todo o treino. Ele planeja a sessão, acompanha cada série e corrige a execução na hora.</p>
+          <div class="acoes" style="display:flex;flex-wrap:wrap;gap:12px">
+            <a class="btn btn-preto" data-wa="studio_hero" data-evento="cta_secao_studio" href="https://wa.me/5591983542792">Conhecer o Studio <span aria-hidden="true">→</span></a>
+            <a class="btn btn-contorno" data-wa="studio_experimental" data-evento="cta_studio_experimental" href="https://wa.me/5591983542792">Consultar aula experimental</a>
+          </div>
+        </div>
+        <div class="colunas">
+          <div>
+            <p class="rotulo" style="margin-bottom:12px">Para quem é</p>
+            <ul class="lista-perfil">
+              <li><span class="rotulo">A</span><span>Quem está começando e quer aprender a fazer certo.</span></li>
+              <li><span class="rotulo">B</span><span>Quem voltou a treinar depois de um tempo parado.</span></li>
+              <li><span class="rotulo">C</span><span>Quem rende mais com alguém só para si, acompanhando e corrigindo.</span></li>
+            </ul>
+          </div>
+          <dl class="ficha">
+            <div><dt>Formato</dt><dd>Personal dedicado, do começo ao fim do treino</dd></div>
+            <div><dt>Horário</dt><dd>06h às 21h</dd></div>
+            <div><dt>Endereço</dt><dd>R. Cmte. Francisco de Assis, 1767</dd></div>
+            <div><dt>Aula experimental</dt><dd><span class="pendente">confirmar</span></dd></div>
+          </dl>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PILATES -->
+  <section class="pilates" aria-labelledby="h-pilates">
+    <div class="wrap">
+      <h2 id="h-pilates" class="rotulo">Pilates</h2>
+      <p>A Soul Fit também tem aulas de Pilates. Pergunte pelo WhatsApp em qual unidade e em quais horários.</p>
+      <a class="btn btn-contorno" data-wa="pilates" data-evento="cta_pilates" href="https://wa.me/5591983542792">Perguntar sobre Pilates</a>
+    </div>
+  </section>
+
+  <!-- ACADEMIA -->
+  <section class="secao" id="academia" aria-labelledby="h2-academia">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="rotulo">Academia Soul Fit</span>
+        <h2 id="h2-academia" class="display">Você treina no seu ritmo. <span style="color:var(--soul)">Os personais orientam.</span></h2>
+      </div>
+      <div class="detalhe">
+        <div class="foto-fachada">
+          <figure>
+            <img src="assets/academia-fachada.jpg" alt="Fachada preta da Academia Soul Fit com o logotipo em letras brancas e uma linha verde" width="388" height="515" loading="lazy">
+            <figcaption class="rotulo">Fachada da Academia</figcaption>
+          </figure>
+        </div>
+        <div class="colunas">
+          <p class="abre">Liberdade de horário e de rotina, sem treinar sozinho. Os personais ficam disponíveis em toda a academia, auxiliando nos aparelhos, na execução e no treino.</p>
+          <div>
+            <p class="rotulo" style="margin-bottom:12px">Para quem é</p>
+            <ul class="lista-perfil">
+              <li><span class="rotulo">A</span><span>Quem quer liberdade para organizar a própria rotina.</span></li>
+              <li><span class="rotulo">B</span><span>Quem está começando e quer orientação enquanto treina.</span></li>
+              <li><span class="rotulo">C</span><span>Quem quer variedade de aparelhos num só lugar.</span></li>
+            </ul>
+          </div>
+          <dl class="ficha">
+            <div><dt>Formato</dt><dd>Musculação com personais no salão</dd></div>
+            <div><dt>Horário</dt><dd>06h às 22h</dd></div>
+            <div><dt>Endereço</dt><dd><span class="pendente">confirmar endereço</span></dd></div>
+          </dl>
+          <div style="display:flex;flex-wrap:wrap;gap:12px">
+            <a class="btn btn-soul" data-wa="academia_planos" data-evento="cta_academia_planos" href="https://wa.me/5591983542792">Consultar planos e horários <span aria-hidden="true">→</span></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HORÁRIOS -->
+  <section class="secao" id="horarios" aria-labelledby="h2-horarios" style="border-top:1px solid var(--concreto)">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="rotulo">Horário de funcionamento</span>
+        <h2 id="h2-horarios" class="display">Das 6h até a noite.</h2>
+      </div>
+      <div class="escala" role="img" aria-label="Studio aberto das 6h às 21h. Academia aberta das 6h às 22h.">
+        <div class="regua" aria-hidden="true">
+          <span style="left:0%">00h</span>
+          <span style="left:25%">06h</span>
+          <span style="left:50%">12h</span>
+          <span style="left:75%">18h</span>
+          <span style="left:100%">24h</span>
+        </div>
+        <div class="faixa studio" aria-hidden="true">
+          <span class="nome">Studio</span>
+          <div class="trilho"><div class="barra" style="--abre:6;--fecha:21"><span>06h</span><span>21h</span></div></div>
+        </div>
+        <div class="faixa academia" aria-hidden="true">
+          <span class="nome">Academia</span>
+          <div class="trilho"><div class="barra" style="--abre:6;--fecha:22"><span>06h</span><span>22h</span></div></div>
+        </div>
+      </div>
+      <p class="horarios-nota">Horários informados pela Soul Fit. Dias de funcionamento <span class="pendente">confirmar</span>. Em feriados, confirme pelo WhatsApp.</p>
+    </div>
+  </section>
+
+  <!-- COMO FUNCIONA -->
+  <section class="secao" aria-labelledby="h2-como" style="border-top:1px solid var(--concreto)">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="rotulo">Como começar</span>
+        <h2 id="h2-como" class="display">Três passos até o primeiro treino.</h2>
+      </div>
+      <ol class="passos">
+        <li>
+          <span class="num" aria-hidden="true">01</span>
+          <h3>Escolha a unidade</h3>
+          <p>Toque no botão do Studio ou da Academia. A mensagem já vai pronta e diz qual unidade você quer conhecer.</p>
+        </li>
+        <li>
+          <span class="num" aria-hidden="true">02</span>
+          <h3>Tire suas dúvidas</h3>
+          <p>A equipe responde no WhatsApp com planos, horários e o que você precisa saber antes de ir.</p>
+        </li>
+        <li>
+          <span class="num" aria-hidden="true">03</span>
+          <h3>Venha conhecer</h3>
+          <p>Combine um horário para ver o espaço e começar a treinar.</p>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <!-- DÚVIDAS -->
+  <section class="secao claro" id="duvidas" aria-labelledby="h2-duvidas">
+    <div class="wrap">
+      <div class="faq-grade">
+        <div class="lateral">
+          <span class="rotulo">Dúvidas frequentes</span>
+          <h2 id="h2-duvidas" class="display" style="font-size:var(--t-h3);margin-top:16px">Antes de mandar mensagem.</h2>
+        </div>
+        <div class="faq">
+          <details>
+            <summary>Nunca treinei. Vou ficar perdido?</summary>
+            <div class="resp">
+              <p>Não. As duas unidades têm profissionais para orientar você. No Studio, um personal fica só com você o treino todo. Na Academia, os personais do salão ajudam com os aparelhos, a execução e o treino.</p>
+              <a data-wa="duvida" data-evento="cta_faq_nunca_treinei" href="https://wa.me/5591983542792">Me ajudem a escolher</a>
+            </div>
+          </details>
+          <details>
+            <summary>Quero alguém acompanhando meu treino.</summary>
+            <div class="resp">
+              <p>Depende de quanto acompanhamento você quer. Um profissional só para você, do começo ao fim: Studio. Treinar no seu ritmo e ter orientação dos personais no salão: Academia.</p>
+              <a data-wa="studio_hero" data-evento="cta_faq_acompanhamento" href="https://wa.me/5591983542792">Conhecer o Studio</a>
+            </div>
+          </details>
+          <details>
+            <summary>Prefiro treinar no meu ritmo.</summary>
+            <div class="resp">
+              <p>A Academia foi feita para isso. Você escolhe o dia, o horário e o treino, das 6h às 22h, e conta com os personais do salão sempre que precisar.</p>
+              <a data-wa="academia_hero" data-evento="cta_faq_ritmo" href="https://wa.me/5591983542792">Conhecer a Academia</a>
+            </div>
+          </details>
+          <details>
+            <summary>Não sei qual unidade escolher.</summary>
+            <div class="resp">
+              <p>Quer um profissional só para você o treino todo? Studio. Quer liberdade de horário com personais orientando no salão? Academia. Ainda em dúvida? Mande uma mensagem e a equipe ajuda você a decidir.</p>
+              <a data-wa="duvida" data-evento="cta_faq_duvida" href="https://wa.me/5591983542792">Me ajudem a escolher</a>
+            </div>
+          </details>
+          <details>
+            <summary>Quero saber os valores antes de ir.</summary>
+            <div class="resp">
+              <p>Os valores mudam conforme a unidade e o plano. Peça a tabela atualizada no WhatsApp e a equipe envia as condições de hoje.</p>
+              <a data-wa="academia_planos" data-evento="cta_faq_valores" href="https://wa.me/5591983542792">Pedir os planos</a>
+            </div>
+          </details>
+          <details>
+            <summary>Vocês têm Pilates?</summary>
+            <div class="resp">
+              <p>Sim. Pergunte pelo WhatsApp em qual unidade e em quais horários as aulas acontecem.</p>
+              <a data-wa="pilates" data-evento="cta_faq_pilates" href="https://wa.me/5591983542792">Perguntar sobre Pilates</a>
+            </div>
+          </details>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTATO -->
+  <section class="secao" id="contato" aria-labelledby="h2-contato">
+    <div class="wrap">
+      <div class="cabeca">
+        <span class="rotulo">Onde estamos</span>
+        <h2 id="h2-contato" class="display">Duas unidades em Castanhal.</h2>
+      </div>
+      <div class="fichas">
+        <div class="ficha-unidade">
+          <h3>Studio</h3>
+          <dl class="ficha">
+            <div><dt>Endereço</dt><dd>R. Cmte. Francisco de Assis, 1767<br>Castanhal, PA</dd></div>
+            <div><dt>Horário</dt><dd>06h às 21h</dd></div>
+            <div><dt>WhatsApp</dt><dd class="numero">(91) 98354-2792</dd></div>
+          </dl>
+          <div class="acoes">
+            <a class="btn btn-gelo" data-wa="studio_hero" data-evento="cta_contato_studio" href="https://wa.me/5591983542792">WhatsApp do Studio</a>
+            <a class="btn btn-contorno" href="https://www.google.com/maps/search/?api=1&amp;query=R.+Comandante+Francisco+de+Assis+1767+Castanhal+PA" target="_blank" rel="noopener">Ver no mapa</a>
+          </div>
+        </div>
+        <div class="ficha-unidade">
+          <h3>Academia</h3>
+          <dl class="ficha">
+            <div><dt>Endereço</dt><dd><span class="pendente">confirmar endereço</span><br>Castanhal, PA</dd></div>
+            <div><dt>Horário</dt><dd>06h às 22h</dd></div>
+            <div><dt>WhatsApp</dt><dd class="numero">(91) 98354-2792</dd></div>
+          </dl>
+          <div class="acoes">
+            <a class="btn btn-soul" data-wa="academia_hero" data-evento="cta_contato_academia" href="https://wa.me/5591983542792">WhatsApp da Academia</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA FINAL -->
+  <section class="final" aria-labelledby="h2-final">
+    <div class="wrap">
+      <h2 id="h2-final" class="display mega">Move your <em>soul.</em></h2>
+      <div class="linha">
+        <p>Personal só seu ou personais no salão. Escolha a sua unidade e fale com a equipe.</p>
+        <div class="acoes">
+          <a class="btn btn-contorno" data-wa="studio_hero" data-evento="cta_final_studio" href="https://wa.me/5591983542792">Conhecer o Studio</a>
+          <a class="btn btn-soul" data-wa="academia_hero" data-evento="cta_final_academia" href="https://wa.me/5591983542792">Conhecer a Academia <span aria-hidden="true">→</span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="rodape">
+  <div class="wrap">
+    <div class="logos">
+      <svg class="logo logo-studio" viewBox="0 0 800 650" role="img" aria-label="Soul Fit Personal Studio"><use href="#logo-studio"/></svg>
+      <svg class="logo" viewBox="0 0 1630 1310" role="img" aria-label="Soul Fit Academia"><use href="#logo-academia"/></svg>
+    </div>
+    <p class="rotulo">Castanhal · Pará · <a href="https://www.instagram.com/studio_soulfit/" target="_blank" rel="noopener">@studio_soulfit</a></p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  var WHATSAPP = "5591983542792";
+  var MENSAGENS = {
+    header_studio: "Olá! Vim pelo site e quero falar com o Studio Soul Fit.",
+    header_academia: "Olá! Vim pelo site e quero falar com a Academia Soul Fit.",
+    studio_hero: "Olá! Vim pelo site e gostaria de conhecer o Studio Soul Fit e entender como funciona o acompanhamento dos treinos.",
+    studio_experimental: "Olá! Vim pelo site. Vocês têm aula experimental no Studio Soul Fit? Gostaria de saber como funciona.",
+    academia_hero: "Olá! Vim pelo site e gostaria de conhecer a Academia Soul Fit e saber sobre planos, horários e estrutura.",
+    academia_planos: "Olá! Vim pelo site e quero receber os planos e horários da Academia Soul Fit.",
+    pilates: "Olá! Vim pelo site e gostaria de saber sobre as aulas de Pilates da Soul Fit: em qual unidade e em quais horários.",
+    duvida: "Olá! Vim pelo site e ainda não sei se o Studio ou a Academia é melhor pra mim. Podem me ajudar?"
+  };
+
+  document.querySelectorAll("[data-wa]").forEach(function (link) {
+    var texto = MENSAGENS[link.dataset.wa];
+    if (texto) link.href = "https://wa.me/" + WHATSAPP + "?text=" + encodeURIComponent(texto);
+    link.target = "_blank";
+    link.rel = "noopener";
+    link.addEventListener("click", function () {
+      // Pronto para GA4 / Meta Pixel: só ativar quando o cliente tiver a ferramenta
+      if (window.dataLayer) window.dataLayer.push({ event: "cta_whatsapp", cta: link.dataset.evento });
+      document.querySelectorAll("details.wa-menu[open], details.menu-movel[open]").forEach(function (d) { d.open = false; });
+    });
+  });
+
+  // Fecha os menus ao tocar fora ou ao escolher um link
+  document.addEventListener("click", function (e) {
+    document.querySelectorAll("details.wa-menu[open], details.menu-movel[open]").forEach(function (d) {
+      if (!d.contains(e.target)) d.open = false;
+    });
+  });
+  document.querySelectorAll(".menu-movel .painel a[href^='#']").forEach(function (a) {
+    a.addEventListener("click", function () { a.closest("details").open = false; });
+  });
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape") document.querySelectorAll("details.wa-menu[open], details.menu-movel[open]").forEach(function (d) { d.open = false; });
+  });
+})();
+</script>
+</body>
+</html>

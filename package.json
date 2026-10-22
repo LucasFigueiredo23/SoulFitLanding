@@ -1,0 +1,14 @@
+{
+  "name": "soulfit-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Landing page da Soul Fit (Castanhal, PA): Studio e Academia.",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy",
+    "check": "wrangler deploy --dry-run"
+  },
+  "devDependencies": {
+    "wrangler": "^4.151.3"
+  }
+}
