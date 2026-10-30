@@ -12,13 +12,14 @@
 <meta property="og:url" content="https://soulfitlanding.lucasfigueiredo-bsilva.workers.dev/">
 <meta property="og:title" content="Soul Fit Castanhal · Studio e Academia">
 <meta property="og:description" content="Studio: um personal só seu o treino todo. Academia: personais orientando no salão. Escolha sua unidade e fale com a equipe no WhatsApp.">
-<meta property="og:image" content="https://soulfitlanding.lucasfigueiredo-bsilva.workers.dev/assets/og-soulfit.jpg">
+<meta property="og:image" content="https://soulfitlanding.lucasfigueiredo-bsilva.workers.dev/assets/og-soulfit.jpg?v=2">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Soul Fit Castanhal: fachada do Studio à noite e parede da Academia com a frase Move your soul">
+<meta property="og:image:alt" content="Soul Fit Castanhal, Studio e Academia: personais acompanhando alunos no salão da Academia e no Studio">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="theme-color" content="#111214">
+<script>document.documentElement.classList.add("js")</script>
 <link rel="icon" type="image/svg+xml" href="assets/logo-academia.svg">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -46,6 +47,9 @@
 
   --gutter: clamp(20px, 4vw, 56px);
   --secao: clamp(80px, 11vw, 152px);
+
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* entradas */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);   /* movimento na tela (linha verde) */
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -100,7 +104,7 @@ ul { padding: 0; list-style: none; }
   font: 700 1rem/1 var(--f);
   text-decoration: none;
   border-radius: 2px;
-  transition: background-color .2s ease, color .2s ease;
+  transition: background-color .2s ease, color .2s ease, transform .16s var(--ease-out);
 }
 .btn-soul { background: var(--soul); color: var(--asfalto); }
 .btn-soul:hover { background: var(--gelo); }
@@ -121,7 +125,7 @@ ul { padding: 0; list-style: none; }
 .logo-studio { color: var(--gelo); --logo-linha: var(--soul); --logo-sub: #C9CCD1; }
 .marca .logo { height: 42px; width: auto; aspect-ratio: 1630 / 1310; }
 .nav { display: flex; align-items: center; gap: 32px; }
-.nav a:not(.btn) { text-decoration: none; font-weight: 600; font-size: .95rem; padding-block: 6px; border-bottom: 2px solid transparent; }
+.nav a:not(.btn) { text-decoration: none; font-weight: 600; font-size: .95rem; padding-block: 6px; border-bottom: 2px solid transparent; transition: border-color .2s ease; }
 .nav a:not(.btn):hover { border-bottom-color: var(--soul); }
 .nav .btn { min-height: 44px; padding: 0 20px; font-size: .95rem; }
 
@@ -221,7 +225,7 @@ ul { padding: 0; list-style: none; }
   content: ""; flex: none; width: 14px; height: 14px;
   background: linear-gradient(var(--soul), var(--soul)) center / 100% 2px no-repeat,
               linear-gradient(var(--soul), var(--soul)) center / 2px 100% no-repeat;
-  transition: transform .25s ease;
+  transition: transform .25s var(--ease-out);
 }
 .faq details[open] summary::after { transform: rotate(45deg); }
 .faq p { padding-bottom: 24px; color: var(--cinza); max-width: 62ch; }
@@ -269,9 +273,68 @@ ul { padding: 0; list-style: none; }
   .c-acao address .link { display: block; margin: 4px 0 0; width: fit-content; }
   .nav .btn { width: auto; }
 }
+
+/* ---------- Animações ----------
+   Calmas: só opacidade e transform, entrando uma vez.
+   Quem pede menos movimento no celular vê só os fades, sem deslocamento.
+   O que está marcado com .revela aparece ao rolar (o script no fim liga .visivel). */
+
+/* Entrada do topo, ao abrir a página */
+@keyframes sobe { from { opacity: 0; transform: translateY(20px); } }
+@keyframes surge { from { opacity: 0; } }
+@keyframes foto-entra { from { scale: 1.12; } }
+
+/* Ao rolar */
+.js .revela { opacity: 0; transition: opacity .7s var(--ease-out), transform .7s var(--ease-out); transition-delay: var(--atraso, 0ms); }
+.js .revela.visivel { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .escolha-cabeca > * { animation: sobe .7s var(--ease-out) backwards; }
+  .escolha-cabeca > p { animation-delay: 60ms; }
+  .painel { animation: sobe .8s var(--ease-out) 120ms backwards; }
+  .painel-studio { animation-delay: 200ms; }
+  .painel-corpo { animation: sobe .8s var(--ease-out) 300ms backwards; }
+  .painel-studio .painel-corpo { animation-delay: 380ms; }
+  .painel-foto { animation: foto-entra 1.6s var(--ease-out) backwards; }
+
+  /* Foto do topo desce mais devagar que a página ao rolar (parallax leve).
+     A escala 1.08 cobre o deslocamento sem mostrar borda. */
+  @supports (animation-timeline: view()) {
+    .painel-foto {
+      scale: 1.08;
+      animation: foto-entra 1.6s var(--ease-out) backwards, foto-desliza linear both;
+      animation-timeline: auto, view();
+      animation-range: normal, exit;
+    }
+  }
+  @keyframes foto-desliza { to { translate: 0 3.5%; } }
+
+  .js .revela:not(.visivel) { transform: translateY(24px); }
+
+  /* "Move your soul." sobe de dentro da linha verde, e a linha se desenha da esquerda */
+  .js .mega.revela { transition: opacity .9s var(--ease-out), transform .9s var(--ease-out), clip-path .9s var(--ease-out); clip-path: inset(-25% 0 -25% 0); }
+  .js .mega.revela:not(.visivel) { transform: translateY(18%); clip-path: inset(125% 0 -25% 0); }
+  .js .mega.revela + .linha-soul { transform-origin: left; transition: transform 1s var(--ease-in-out) .15s; }
+  .js .mega.revela:not(.visivel) + .linha-soul { transform: scaleX(0); }
+
+  /* Resposta ao toque/clique */
+  .btn:active { transform: scale(.97); }
+
+  /* Dúvidas abrem deslizando (navegadores que ainda não suportam abrem na hora) */
+  :root { interpolate-size: allow-keywords; }
+  .faq details::details-content { block-size: 0; overflow: hidden; transition: block-size .3s var(--ease-out), content-visibility .3s allow-discrete; }
+  .faq details[open]::details-content { block-size: auto; }
+}
+
+/* Zoom leve na foto ao passar o mouse (só com mouse: no toque o hover dispara sozinho) */
+@media (prefers-reduced-motion: no-preference) and (hover: hover) and (pointer: fine) {
+  .painel-foto { transition: transform .8s var(--ease-out); }
+  .painel:hover .painel-foto { transform: scale(1.03); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
-  *, *::before, *::after { transition: none !important; animation: none !important; }
+  .escolha-cabeca > *, .painel { animation: surge .6s ease backwards; }
 }
 </style>
 </head>
@@ -338,10 +401,10 @@ ul { padding: 0; list-style: none; }
   <!-- COMO FUNCIONA: as duas unidades lado a lado -->
   <section class="comparar" aria-labelledby="h-comparar">
     <div class="wrap">
-      <h2 id="h-comparar" class="comparar-titulo">Como funciona cada unidade.</h2>
+      <h2 id="h-comparar" class="comparar-titulo revela">Como funciona cada unidade.</h2>
       <div class="colunas">
 
-        <article class="coluna" id="academia" aria-labelledby="h-academia">
+        <article class="coluna revela" id="academia" aria-labelledby="h-academia">
           <div class="c-cabeca">
             <p class="unidade-nome">Academia</p>
             <h3 id="h-academia" class="h2">Seu ritmo, com orientação por perto.</h3>
@@ -368,7 +431,7 @@ ul { padding: 0; list-style: none; }
           </div>
         </article>
 
-        <article class="coluna claro" id="studio" aria-labelledby="h-studio">
+        <article class="coluna claro revela" style="--atraso: 90ms" id="studio" aria-labelledby="h-studio">
           <div class="c-cabeca">
             <p class="unidade-nome">Studio</p>
             <h3 id="h-studio" class="h2">Atenção total, do começo ao fim.</h3>
@@ -404,11 +467,11 @@ ul { padding: 0; list-style: none; }
   <section class="secao duvidas" id="duvidas" aria-labelledby="h-duvidas">
     <div class="wrap grade">
       <div class="col-a">
-        <h2 id="h-duvidas" class="h2">Dúvidas frequentes</h2>
+        <h2 id="h-duvidas" class="h2 revela">Dúvidas frequentes</h2>
       </div>
       <div class="col-b">
         <div>
-          <div class="faq">
+          <div class="faq revela" style="--atraso: 90ms">
             <details>
               <summary>Nunca treinei. Vou ficar perdido?</summary>
               <p>Não. As duas unidades têm profissionais para orientar você. No Studio, um personal fica só com você o treino todo. Na Academia, os personais do salão ajudam com os aparelhos, a execução e o treino.</p>
@@ -427,7 +490,7 @@ ul { padding: 0; list-style: none; }
               <a class="link faq-link" data-wa="pilates" data-evento="cta_pilates" href="https://wa.me/5591983542792">Perguntar sobre Pilates</a>
             </details>
           </div>
-          <div class="ainda">
+          <div class="ainda revela">
             <p>Ainda em dúvida? A equipe ajuda você a decidir.</p>
             <a class="btn btn-soul" data-wa="duvida" data-evento="cta_duvidas" href="https://wa.me/5591983542792">Me ajudem a escolher</a>
           </div>
@@ -440,9 +503,9 @@ ul { padding: 0; list-style: none; }
 <!-- FINAL E CONTATO -->
 <footer class="final" id="contato">
   <div class="wrap">
-    <p class="mega">Move your soul.</p>
+    <p class="mega revela">Move your soul.</p>
     <div class="linha-soul" aria-hidden="true"></div>
-    <div class="contato">
+    <div class="contato revela" style="--atraso: 200ms">
       <div class="wa">
         <h2 class="h3">WhatsApp das duas unidades</h2>
         <p class="num">(91) 98354-2792</p>
@@ -484,6 +547,23 @@ ul { padding: 0; list-style: none; }
       if (window.dataLayer) window.dataLayer.push({ event: "cta_whatsapp", cta: link.dataset.evento });
     });
   });
+})();
+
+// Aparece ao rolar: liga .visivel uma vez só, quando o elemento entra na tela
+(function () {
+  var alvos = document.querySelectorAll(".revela");
+  if (!("IntersectionObserver" in window)) {
+    alvos.forEach(function (el) { el.classList.add("visivel"); });
+    return;
+  }
+  var obs = new IntersectionObserver(function (entradas) {
+    entradas.forEach(function (e) {
+      if (!e.isIntersecting) return;
+      e.target.classList.add("visivel");
+      obs.unobserve(e.target);
+    });
+  }, { rootMargin: "0px 0px -10% 0px" });
+  alvos.forEach(function (el) { obs.observe(el); });
 })();
 </script>
 </body>
